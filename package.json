@@ -1,0 +1,25 @@
+{
+  "name": "npm-tweets",
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/index",
+  "version": "0.0.1",
+  "author": "Ben Coe <bencoe@gmail.com>",
+  "engines": [
+    "node"
+  ],
+  "description": "Publishes tweets when libraries are updated on NPM.",
+  "keywords": [
+    "npm",
+    "tweets"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bcoe/npm-tweets.git"
+  },
+  "dependencies": {
+    "twitter": ">=0.1.17"
+  },
+  "devDependencies": {}
+}
