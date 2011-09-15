@@ -19,7 +19,8 @@
     "url": "git://github.com/bcoe/npm-tweets.git"
   },
   "dependencies": {
-    "twitter": ">=0.1.17"
+    "twitter": ">=0.1.17",
+    "sexy-args": ">=0.0.1"
   },
   "devDependencies": {}
 }
