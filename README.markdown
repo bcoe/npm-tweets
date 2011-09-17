@@ -5,9 +5,11 @@ I published a library recently that didn't get nearly as many followers as expec
 
 A person of lesser hubris might have assumed that the library was was less useful than they initially assumed. Luckily I didn't make this false assumption...
 
-The problem was that there aren't enough tweets when Node.js packages are published or updated.
+The problem was that there aren't enough tweets when Node.js packages are published or updated
 
-*NPM-Tweets* is an open-source twitter bot that tweets as packages are updated on npmjs.org.
+*NPM-Tweets* is an open-source twitter bot that tweets as packages are updated on npmjs.org:
+
+http://twitter.com/#!/nodenpm
 
 Usage
 -----
