@@ -14,7 +14,7 @@ http://twitter.com/#!/nodenpm
 Usage
 -----
 
-I've open-sourced NPM-Tweets so that anyone can easily setup a Node.js Twitter Bot.
+I've open-sourced NPM-Tweets so that anyone can easily setup an NPM Twitter Bot.
 
 Creating the Bot:
 
