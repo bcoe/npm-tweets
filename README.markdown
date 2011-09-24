@@ -1,4 +1,4 @@
-NPM-Tweets
+npm-tweets
 ==========
 
 I published a library recently that didn't get nearly as many followers as expected.
@@ -7,14 +7,14 @@ A person of lesser hubris might have assumed that the library was was less usefu
 
 The problem was that there aren't enough tweets when Node.js packages are published or updated
 
-*NPM-Tweets* is an open-source twitter bot that tweets as packages are updated on npmjs.org:
+*npm-tweets* is an open-source twitter bot that tweets as packages are updated on npmjs.org:
 
 http://twitter.com/#!/nodenpm
 
 Usage
 -----
 
-I've open-sourced NPM-Tweets so that anyone can easily setup an NPM Twitter Bot.
+I've open-sourced npm-tweets so that anyone can easily setup an npm Twitter Bot.
 
 Creating the Bot:
 

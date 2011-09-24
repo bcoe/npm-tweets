@@ -4,12 +4,12 @@
     "lib": "./lib"
   },
   "main": "./lib/index",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Ben Coe <bencoe@gmail.com>",
   "engines": [
     "node"
   ],
-  "description": "Publishes tweets when libraries are updated on NPM.",
+  "description": "Publishes tweets when libraries are updated on npm.",
   "keywords": [
     "npm",
     "tweets"
