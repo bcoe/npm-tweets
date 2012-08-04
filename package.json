@@ -4,7 +4,7 @@
     "lib": "./lib"
   },
   "main": "./lib/index",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Ben Coe <bencoe@gmail.com>",
   "engines": [
     "node"
