@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/bcoe/npm-tweets.png)](http://travis-ci.org/bcoe/npm-tweets)
 npm-tweets
 ==========
 
