@@ -1,6 +1,6 @@
 var checkNPMTests = require('./test-check-npm'),
 	tweetsTest = require('./test-tweets')
-	puts = require('sys').puts,
+	puts = require('util').puts,
 	tests = [];
 	
 function run(callback, test) {
