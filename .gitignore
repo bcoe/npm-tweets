@@ -1,2 +1,4 @@
 *.DS_Store
 script.js
+.env
+node_modules

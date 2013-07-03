@@ -1,10 +1,12 @@
 {
   "name": "npm-tweets",
   "directories": {
-    "lib": "./lib"
+    "lib": "./lib",
+    "bin": "./bin"
   },
   "main": "./lib/index",
-  "version": "0.0.6",
+  "bin": "./bin/npm-tweets.js",
+  "version": "1.0.0",
   "author": "Ben Coe <bencoe@gmail.com>",
   "engines": [
     "node"
@@ -19,8 +21,9 @@
     "url": "git://github.com/bcoe/npm-tweets.git"
   },
   "dependencies": {
-    "twitter": ">=0.1.17",
-    "sexy-args": ">=0.0.1"
+    "twitter-api": ">=1.0.2",
+    "underscore": ">=0.0.1",
+    "optimist": ">0.0.0"
   },
   "devDependencies": {}
 }
