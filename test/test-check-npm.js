@@ -192,6 +192,7 @@ exports.tests = {
 			description: 'awesome'
 		};
 
+		equal(checkNPM.majorRelease(rawPackage1), true);
 		equal(checkNPM.majorRelease(rawPackage2), true);
 
 		finished();
