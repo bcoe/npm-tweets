@@ -127,17 +127,13 @@ exports.tests = {
 		var checkNPM = new CheckNPM({cacheSize: 3});
 		
 		var rawPackage1 = {
-			'dist-tags': {
-				'latest': '1.0.0'
-			},
+			version: '1.0.0',
 			name: 'foolib',
 			description: 'awesome'
 		};
 
 		var rawPackage2 = {
-			'dist-tags': {
-				'latest': '0.10.0'
-			},
+			version: '0.10.0',
 			name: 'foolib',
 			description: 'awesome'
 		};
@@ -152,17 +148,13 @@ exports.tests = {
 		var checkNPM = new CheckNPM({cacheSize: 3});
 		
 		var rawPackage1 = {
-			'dist-tags': {
-				'latest': '11.2.2'
-			},
+			version: '11.2.2',
 			name: 'foolib',
 			description: 'awesome'
 		};
 
 		var rawPackage2 = {
-			'dist-tags': {
-				'latest': '0.0.12'
-			},
+			version: '0.0.12',
 			name: 'foolib',
 			description: 'awesome'
 		};
@@ -177,17 +169,13 @@ exports.tests = {
 		var checkNPM = new CheckNPM({cacheSize: 3});
 		
 		var rawPackage1 = {
-			'dist-tags': {
-				'latest': '0.0.0'
-			},
+			version: '0.0.0',
 			name: 'foolib',
 			description: 'awesome'
 		};
 
 		var rawPackage2 = {
-			'dist-tags': {
-				'latest': '0.0.1'
-			},
+			version: '0.0.1',
 			name: 'foolib',
 			description: 'awesome'
 		};
