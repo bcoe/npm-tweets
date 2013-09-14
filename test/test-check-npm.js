@@ -84,20 +84,18 @@ exports.tests = {
 		var checkNPM = new CheckNPM({cacheSize: 3});
 		
 		var rawPackage = {
-			doc: {
-				'dist-tags': {
-					'latest': '0.0.1'
-				},
-				name: 'foolib',
-				description: 'awesome'
-			}
+			'dist-tags': {
+				'latest': '0.0.1'
+			},
+			name: 'foolib',
+			description: 'awesome'
 		};
 		
 		var mungedPackage = checkNPM.mungePackage(rawPackage);
 		equal('foolib', mungedPackage.name);
 		equal('awesome', mungedPackage.description);
 		equal('0.0.1', mungedPackage.version);
-		equal('http://search.npmjs.org/#/foolib', mungedPackage.url);
+		equal('https://npmjs.org/package/foolib', mungedPackage.url);
 		finished();
 	},
 	
@@ -105,16 +103,14 @@ exports.tests = {
 		var checkNPM = new CheckNPM({cacheSize: 3});
 		
 		var rawPackage = {
-			doc: {
-				name: 'foolib'
-			}
+			name: 'foolib'
 		};
 		
 		var mungedPackage = checkNPM.mungePackage(rawPackage);
 		equal('foolib', mungedPackage.name);
 		equal('', mungedPackage.description);
 		equal(false, mungedPackage.version);
-		equal('http://search.npmjs.org/#/foolib', mungedPackage.url);
+		equal('https://npmjs.org/package/foolib', mungedPackage.url);
 		finished();
 	},
 	
@@ -124,6 +120,80 @@ exports.tests = {
 		equal('g1.0.0', checkNPM.cache[0]);
 		equal('net', checkNPM.cache[1]);
 		equal('postprocess0.0.2', checkNPM.cache[18]);
+		finished();
+	},
+
+	'should publish a major release': function(finished) {
+		var checkNPM = new CheckNPM({cacheSize: 3});
+		
+		var rawPackage1 = {
+			'dist-tags': {
+				'latest': '1.0.0'
+			},
+			name: 'foolib',
+			description: 'awesome'
+		};
+
+		var rawPackage2 = {
+			'dist-tags': {
+				'latest': '0.10.0'
+			},
+			name: 'foolib',
+			description: 'awesome'
+		};
+
+		equal(checkNPM.majorRelease(rawPackage1), true);
+		equal(checkNPM.majorRelease(rawPackage2), true);
+
+		finished();
+	},
+
+	'should not publish minor release': function(finished) {
+		var checkNPM = new CheckNPM({cacheSize: 3});
+		
+		var rawPackage1 = {
+			'dist-tags': {
+				'latest': '11.2.2'
+			},
+			name: 'foolib',
+			description: 'awesome'
+		};
+
+		var rawPackage2 = {
+			'dist-tags': {
+				'latest': '0.0.12'
+			},
+			name: 'foolib',
+			description: 'awesome'
+		};
+
+		equal(checkNPM.majorRelease(rawPackage1), false);
+		equal(checkNPM.majorRelease(rawPackage2), false);
+
+		finished();
+	},
+
+	'should publish initial releases': function(finished) {
+		var checkNPM = new CheckNPM({cacheSize: 3});
+		
+		var rawPackage1 = {
+			'dist-tags': {
+				'latest': '0.0.0'
+			},
+			name: 'foolib',
+			description: 'awesome'
+		};
+
+		var rawPackage2 = {
+			'dist-tags': {
+				'latest': '0.0.1'
+			},
+			name: 'foolib',
+			description: 'awesome'
+		};
+
+		equal(checkNPM.majorRelease(rawPackage2), true);
+
 		finished();
 	}
 }
