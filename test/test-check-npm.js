@@ -84,20 +84,18 @@ exports.tests = {
 		var checkNPM = new CheckNPM({cacheSize: 3});
 		
 		var rawPackage = {
-			doc: {
-				'dist-tags': {
-					'latest': '0.0.1'
-				},
-				name: 'foolib',
-				description: 'awesome'
-			}
+			'dist-tags': {
+				'latest': '0.0.1'
+			},
+			name: 'foolib',
+			description: 'awesome'
 		};
 		
 		var mungedPackage = checkNPM.mungePackage(rawPackage);
 		equal('foolib', mungedPackage.name);
 		equal('awesome', mungedPackage.description);
 		equal('0.0.1', mungedPackage.version);
-		equal('http://search.npmjs.org/#/foolib', mungedPackage.url);
+		equal('https://npmjs.org/package/foolib', mungedPackage.url);
 		finished();
 	},
 	
@@ -105,16 +103,14 @@ exports.tests = {
 		var checkNPM = new CheckNPM({cacheSize: 3});
 		
 		var rawPackage = {
-			doc: {
-				name: 'foolib'
-			}
+			name: 'foolib'
 		};
 		
 		var mungedPackage = checkNPM.mungePackage(rawPackage);
 		equal('foolib', mungedPackage.name);
 		equal('', mungedPackage.description);
 		equal(false, mungedPackage.version);
-		equal('http://search.npmjs.org/#/foolib', mungedPackage.url);
+		equal('https://npmjs.org/package/foolib', mungedPackage.url);
 		finished();
 	},
 	
