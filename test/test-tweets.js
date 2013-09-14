@@ -18,7 +18,7 @@ exports.tests = {
 	},
 	
 	'should be able to cancel a tweet using the tweetHook': function(finished) {
-		var npmTweets = new NPMTweets(function() {
+		var npmTweets = new NPMTweets({}, function() {
 			return false;
 		});
 		var tweet = npmTweets.createTweet({
@@ -32,7 +32,7 @@ exports.tests = {
 	},
 	
 	'should be able to replace text in a tweet using the tweetHook': function(finished) {
-		var npmTweets = new NPMTweets(function(text) {
+		var npmTweets = new NPMTweets({}, function(text) {
 			return text.replace('Yes', 'Yar');
 		});
 		var tweet = npmTweets.createTweet({
