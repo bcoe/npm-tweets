@@ -23,7 +23,8 @@
   "dependencies": {
     "twitter-api": ">=1.0.2",
     "underscore": ">=0.0.1",
-    "optimist": ">0.0.0"
+    "optimist": ">0.0.0",
+	  "async": ">=0.2.9"
   },
   "devDependencies": {}
 }
