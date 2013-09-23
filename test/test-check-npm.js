@@ -159,8 +159,15 @@ exports.tests = {
 			description: 'awesome'
 		};
 
+		var rawPackage3 = {
+			version: '0.0.0-158',
+			name: 'foolib',
+			description: 'awesome'
+		};
+
 		equal(checkNPM.majorRelease(rawPackage1), false);
 		equal(checkNPM.majorRelease(rawPackage2), false);
+		equal(checkNPM.majorRelease(rawPackage3), false);
 
 		finished();
 	},
