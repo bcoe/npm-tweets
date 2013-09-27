@@ -9,7 +9,7 @@
   "version": "3.0.0",
   "author": "Ben Coe <bencoe@gmail.com>",
   "engines": [
-    "node"
+    "node": "0.10.17"
   ],
   "description": "Publishes tweets when libraries are updated on npm.",
   "keywords": [
