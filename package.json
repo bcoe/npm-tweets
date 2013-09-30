@@ -29,7 +29,9 @@
     "optimist": ">0.0.0",
 	  "async": ">=0.2.9",
     "mocha": ">=1.7.4",
-    "sinon": ">=1.6.0"    
+    "sinon": ">=1.6.0",
+    "redis": ">=0.8.2",
+    "redis-url": "0.1.0"
   },
   "devDependencies": {}
 }

@@ -1,5 +1,4 @@
 var equal = require('assert').equal,
-	puts = require('sys').puts,
 	Tweeter = require('../lib/tweeter').Tweeter;
 
 describe('#tweeter', function() {
