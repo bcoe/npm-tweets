@@ -24,172 +24,167 @@ var twitterStream = [
 	{text:"zipfile(0.2.4): http://t.co/Jt77BOqT C++ library for handling zipfiles in node"},
 	{text:"postprocess(0.0.2): http://t.co/MAoLVsCy Connect middleware providing request post-proccessing."}
 ];
-	
-exports.tests = {
-	'should page out packages when cache size is reached.': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 3});
-		
-		var p1 = {
-			name: 'p1',
-			version: '0.0.1'
-		};
 
-		var p2 = {
-			name: 'p2',
-			version: '0.0.2'
-		};
+describe('CheckNPM', function() {
 
-		var p3 = {
-			name: 'p3',
-			version: '0.0.3'
-		};
+	describe('cache', function () {
+	  it('should page out packages when cache size is reached', function() {
+			var checkNPM = new CheckNPM({cacheSize: 3});
+			
+			var p1 = {
+				name: 'p1',
+				version: '0.0.1'
+			};
 
-		var p4 = {
-			name: 'p4',
-			version: '0.0.1'
-		};
+			var p2 = {
+				name: 'p2',
+				version: '0.0.2'
+			};
 
-		checkNPM.addToCache(p1);
-		checkNPM.addToCache(p2);
-		checkNPM.addToCache(p3);
-		checkNPM.addToCache(p4);
-		
-		equal('p20.0.2', checkNPM.cache[0]);
-		equal('p40.0.1', checkNPM.cache[2]);
-		equal(3, checkNPM.cache.length);
-		
-		finished();
-	},
-	
-	'should return true when in cache is called with a package in the cache': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 3});
-		
-		var p1 = {
-			name: 'p1',
-			version: '0.0.1'
-		};
+			var p3 = {
+				name: 'p3',
+				version: '0.0.3'
+			};
 
-		var p2 = {
-			name: 'p2',
-			version: '0.0.2'
-		};
-		
-		checkNPM.addToCache(p1);
-		equal(true, checkNPM.inCache(p1));
-		equal(false, checkNPM.inCache(p2));
-		finished();
-	},
-	
-	'should return a simplified structure with the keys required for tweeting when mungePackage called': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 3});
-		
-		var rawPackage = {
-			'dist-tags': {
-				'latest': '0.0.1'
-			},
-			name: 'foolib',
-			description: 'awesome'
-		};
-		
-		var mungedPackage = checkNPM.mungePackage(rawPackage);
-		equal('foolib', mungedPackage.name);
-		equal('awesome', mungedPackage.description);
-		equal('0.0.1', mungedPackage.version);
-		equal('https://npmjs.org/package/foolib', mungedPackage.url);
-		finished();
-	},
-	
-	'should handle missing version and description keys when mungePackage is called': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 3});
-		
-		var rawPackage = {
-			name: 'foolib'
-		};
-		
-		var mungedPackage = checkNPM.mungePackage(rawPackage);
-		equal('foolib', mungedPackage.name);
-		equal('', mungedPackage.description);
-		equal(false, mungedPackage.version);
-		equal('https://npmjs.org/package/foolib', mungedPackage.url);
-		finished();
-	},
-	
-	'should seed the cache from a twitter stream passed in': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 19});
-		checkNPM.seedCacheWithTwitterStream(twitterStream);
-		equal('g1.0.0', checkNPM.cache[0]);
-		equal('net', checkNPM.cache[1]);
-		equal('postprocess0.0.2', checkNPM.cache[18]);
-		finished();
-	},
+			var p4 = {
+				name: 'p4',
+				version: '0.0.1'
+			};
 
-	'should publish a major release': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 3});
-		
-		var rawPackage1 = {
-			version: '1.0.0',
-			name: 'foolib',
-			description: 'awesome'
-		};
+			checkNPM.addToCache(p1);
+			checkNPM.addToCache(p2);
+			checkNPM.addToCache(p3);
+			checkNPM.addToCache(p4);
+			
+			equal('p20.0.2', checkNPM.cache[0]);
+			equal('p40.0.1', checkNPM.cache[2]);
+			equal(3, checkNPM.cache.length);
+	  });
 
-		var rawPackage2 = {
-			version: '0.10.0',
-			name: 'foolib',
-			description: 'awesome'
-		};
+	  describe('#inCache', function() {
+			it('should return true when in #inCache is called with a package in the cache', function() {
+				var checkNPM = new CheckNPM({cacheSize: 3});
+				
+				var p1 = {
+					name: 'p1',
+					version: '0.0.1'
+				};
 
-		equal(checkNPM.majorRelease(rawPackage1), true);
-		equal(checkNPM.majorRelease(rawPackage2), true);
+				var p2 = {
+					name: 'p2',
+					version: '0.0.2'
+				};
+				
+				checkNPM.addToCache(p1);
+				equal(true, checkNPM.inCache(p1));
+				equal(false, checkNPM.inCache(p2));
+			});
+	  });
 
-		finished();
-	},
+		it('should seed the cache from a twitter stream passed in', function() {
+			var checkNPM = new CheckNPM({cacheSize: 19});
+			checkNPM.seedCacheWithTwitterStream(twitterStream);
+			equal('g1.0.0', checkNPM.cache[0]);
+			equal('net', checkNPM.cache[1]);
+			equal('postprocess0.0.2', checkNPM.cache[18]);
+		});
+	});
 
-	'should not publish minor release': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 3});
-		
-		var rawPackage1 = {
-			version: '11.2.2',
-			name: 'foolib',
-			description: 'awesome'
-		};
+	describe('#mungePackage', function() {
+		it('should return a simplified structure with the keys required for tweeting', function() {
+			var checkNPM = new CheckNPM({cacheSize: 3}),
+				rawPackage = {
+					'dist-tags': {
+						'latest': '0.0.1'
+					},
+					name: 'foolib',
+					description: 'awesome'
+				},
+				mungedPackage = checkNPM.mungePackage(rawPackage);
 
-		var rawPackage2 = {
-			version: '0.0.12',
-			name: 'foolib',
-			description: 'awesome'
-		};
+			equal('foolib', mungedPackage.name);
+			equal('awesome', mungedPackage.description);
+			equal('0.0.1', mungedPackage.version);
+			equal('https://npmjs.org/package/foolib', mungedPackage.url);
+		});
 
-		var rawPackage3 = {
-			version: '0.0.0-158',
-			name: 'foolib',
-			description: 'awesome'
-		};
+		it('should handle missing version and description keys', function() {
+			var checkNPM = new CheckNPM({cacheSize: 3}),
+				rawPackage = {
+					name: 'foolib'
+				},
+				mungedPackage = checkNPM.mungePackage(rawPackage);
 
-		equal(checkNPM.majorRelease(rawPackage1), false);
-		equal(checkNPM.majorRelease(rawPackage2), false);
-		equal(checkNPM.majorRelease(rawPackage3), false);
+			equal('foolib', mungedPackage.name);
+			equal('', mungedPackage.description);
+			equal(false, mungedPackage.version);
+			equal('https://npmjs.org/package/foolib', mungedPackage.url);
+		});
+	});
 
-		finished();
-	},
+	describe('#majorRelease', function() {
+		it('should publish major releases', function() {
+			var checkNPM = new CheckNPM({cacheSize: 3});
+			
+			var rawPackage1 = {
+				version: '1.0.0',
+				name: 'foolib',
+				description: 'awesome'
+			};
 
-	'should publish initial releases': function(finished) {
-		var checkNPM = new CheckNPM({cacheSize: 3});
-		
-		var rawPackage1 = {
-			version: '0.0.0',
-			name: 'foolib',
-			description: 'awesome'
-		};
+			var rawPackage2 = {
+				version: '0.10.0',
+				name: 'foolib',
+				description: 'awesome'
+			};
 
-		var rawPackage2 = {
-			version: '0.0.1',
-			name: 'foolib',
-			description: 'awesome'
-		};
+			equal(checkNPM.majorRelease(rawPackage1), true);
+			equal(checkNPM.majorRelease(rawPackage2), true);
+		});
 
-		equal(checkNPM.majorRelease(rawPackage1), true);
-		equal(checkNPM.majorRelease(rawPackage2), true);
+		it('should not publish minor release', function() {
+			var checkNPM = new CheckNPM({cacheSize: 3});
+			
+			var rawPackage1 = {
+				version: '11.2.2',
+				name: 'foolib',
+				description: 'awesome'
+			};
 
-		finished();
-	}
-}
+			var rawPackage2 = {
+				version: '0.0.12',
+				name: 'foolib',
+				description: 'awesome'
+			};
+
+			var rawPackage3 = {
+				version: '0.0.0-158',
+				name: 'foolib',
+				description: 'awesome'
+			};
+
+			equal(checkNPM.majorRelease(rawPackage1), false);
+			equal(checkNPM.majorRelease(rawPackage2), false);
+			equal(checkNPM.majorRelease(rawPackage3), false);
+		});
+
+		it('should publish initial releases', function() {
+			var checkNPM = new CheckNPM({cacheSize: 3});
+			
+			var rawPackage1 = {
+				version: '0.0.0',
+				name: 'foolib',
+				description: 'awesome'
+			};
+
+			var rawPackage2 = {
+				version: '0.0.1',
+				name: 'foolib',
+				description: 'awesome'
+			};
+
+			equal(checkNPM.majorRelease(rawPackage1), true);
+			equal(checkNPM.majorRelease(rawPackage2), true);
+		});
+	});
+});

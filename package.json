@@ -11,6 +11,9 @@
   "engines": {
     "node": "0.10.17"
   },
+  "scripts": {
+    "test": "make test"
+  },
   "description": "Publishes tweets when libraries are updated on npm.",
   "keywords": [
     "npm",
@@ -24,7 +27,9 @@
     "twitter-api": ">=1.0.2",
     "underscore": ">=0.0.1",
     "optimist": ">0.0.0",
-	  "async": ">=0.2.9"
+	  "async": ">=0.2.9",
+    "mocha": ">=1.7.4",
+    "sinon": ">=1.6.0"    
   },
   "devDependencies": {}
 }
