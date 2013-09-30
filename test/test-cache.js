@@ -88,11 +88,13 @@ describe('Cache', function () {
     });
   });
 
-  it('should seed the cache from a twitter stream passed in', function() {
-   /* var checkNPM = new CheckNPM({cacheSize: 19});
-    checkNPM.seedCacheWithTwitterStream(twitterStream);
-    equal('g1.0.0', checkNPM.cache[0]);
-    equal('net', checkNPM.cache[1]);
-    equal('postprocess0.0.2', checkNPM.cache[18]);*/
+  it('should seed the cache from a twitter stream passed in', function(done) {
+    var cache = new Cache({cacheSize: 19});
+    cache.seedCacheWithTwitterStream(twitterStream, function () {
+      equal('g1.0.0', cache.cache[0]);
+      equal('net', cache.cache[1]);
+      equal('postprocess0.0.2', cache.cache[18]);
+      done();
+    });
   });
 });
