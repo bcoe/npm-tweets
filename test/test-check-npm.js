@@ -4,7 +4,7 @@ var equal = require('assert').equal,
 describe('CheckNPM', function() {
 	describe('#mungePackage', function() {
 		it('should return a simplified structure with the keys required for tweeting', function() {
-			var checkNPM = new CheckNPM({cacheSize: 3}),
+			var checkNPM = new CheckNPM(),
 				rawPackage = {
 					'dist-tags': {
 						'latest': '0.0.1'
@@ -21,7 +21,7 @@ describe('CheckNPM', function() {
 		});
 
 		it('should handle missing version and description keys', function() {
-			var checkNPM = new CheckNPM({cacheSize: 3}),
+			var checkNPM = new CheckNPM(),
 				rawPackage = {
 					name: 'foolib'
 				},
@@ -36,7 +36,7 @@ describe('CheckNPM', function() {
 
 	describe('#majorRelease', function() {
 		it('should publish major releases', function() {
-			var checkNPM = new CheckNPM({cacheSize: 3});
+			var checkNPM = new CheckNPM();
 			
 			var rawPackage1 = {
 				version: '1.0.0',
@@ -55,7 +55,7 @@ describe('CheckNPM', function() {
 		});
 
 		it('should not publish minor release', function() {
-			var checkNPM = new CheckNPM({cacheSize: 3});
+			var checkNPM = new CheckNPM();
 			
 			var rawPackage1 = {
 				version: '11.2.2',
@@ -81,7 +81,7 @@ describe('CheckNPM', function() {
 		});
 
 		it('should publish initial releases', function() {
-			var checkNPM = new CheckNPM({cacheSize: 3});
+			var checkNPM = new CheckNPM();
 			
 			var rawPackage1 = {
 				version: '0.0.0',
