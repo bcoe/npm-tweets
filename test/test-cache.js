@@ -1,12 +1,8 @@
 var equal = require('assert').equal,
   CheckNPM = require('../lib/check-npm').CheckNPM,
-  Cache = require('../lib/cache').Cache;
+  Cache = require('../lib/cache').Cache,
+  redisUrl = require('redis-url');
 
-/*    beforeEach(function() {
-      var client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
-      client.del('test_stories_published');
-    });*/
-  
 var twitterStream = [
   {text:"ttapi(0.4.2): http://t.co/ypC7rw9b A turntable.fm API"},
   {text:"g (1.0.0): http://t.co/hE2t2Iiu Globalizes module functions"},
@@ -31,8 +27,16 @@ var twitterStream = [
 ];
 
 describe('Cache', function () {
+
+  beforeEach(function(done) {
+    var redis = redisUrl.connect(process.env.REDIS_URL);
+    redis.del(Cache.key, function(err, result) {
+      done();
+    });
+  });
+
   it('should page out packages when cache size is reached', function() {
-    var checkNPM = new CheckNPM({cacheSize: 3});
+    var cache = new Cache({cacheSize: 3});
     
     var p1 = {
       name: 'p1',
@@ -54,19 +58,19 @@ describe('Cache', function () {
       version: '0.0.1'
     };
 
-    checkNPM.addToCache(p1);
-    checkNPM.addToCache(p2);
-    checkNPM.addToCache(p3);
-    checkNPM.addToCache(p4);
+    cache.add(p1);
+    cache.add(p2);
+    cache.add(p3);
+    cache.add(p4);
     
-    equal('p20.0.2', checkNPM.cache[0]);
-    equal('p40.0.1', checkNPM.cache[2]);
-    equal(3, checkNPM.cache.length);
+    equal('p20.0.2', cache.cache[0]);
+    equal('p40.0.1', cache.cache[2]);
+    equal(3, cache.cache.length);
   });
 
   describe('#inCache', function() {
     it('should return true when in #inCache is called with a package in the cache', function() {
-      var checkNPM = new CheckNPM({cacheSize: 3});
+      var cache = new Cache({cacheSize: 3});
       
       var p1 = {
         name: 'p1',
@@ -78,17 +82,17 @@ describe('Cache', function () {
         version: '0.0.2'
       };
       
-      checkNPM.addToCache(p1);
-      equal(true, checkNPM.inCache(p1));
-      equal(false, checkNPM.inCache(p2));
+      cache.add(p1);
+      equal(true, cache.inCache(p1));
+      equal(false, cache.inCache(p2));
     });
   });
 
   it('should seed the cache from a twitter stream passed in', function() {
-    var checkNPM = new CheckNPM({cacheSize: 19});
+   /* var checkNPM = new CheckNPM({cacheSize: 19});
     checkNPM.seedCacheWithTwitterStream(twitterStream);
     equal('g1.0.0', checkNPM.cache[0]);
     equal('net', checkNPM.cache[1]);
-    equal('postprocess0.0.2', checkNPM.cache[18]);
+    equal('postprocess0.0.2', checkNPM.cache[18]);*/
   });
 });
