@@ -1,7 +1,59 @@
 var equal = require('assert').equal,
-	CheckNPM = require('../lib/check-npm').CheckNPM;
+	CheckNPM = require('../lib/check-npm').CheckNPM,
+  Cache = require('../lib/cache').Cache,
+  cache = new Cache(),
+  redisUrl = require('redis-url'),
+  redis = redisUrl.connect(process.env.REDIS_URL);
 
 describe('CheckNPM', function() {
+
+  beforeEach(function(done) {
+    redis.del(Cache.key, function(err, result) {
+      done();
+    });
+  });
+
+	describe('#returnNewPackages', function() {
+		it('adds package to newPackages if not in cache', function(done) {
+			var checkNPM = new CheckNPM({cache: cache}),
+				rawPackages = [{
+				'dist-tags': {
+					'latest': '0.0.1'
+				},
+				name: 'foolib',
+				description: 'awesome'
+			}];
+
+			checkNPM.returnNewPackages(rawPackages, function(err, newPackages) {
+				equal('foolib', newPackages[0].name);
+				equal('0.0.1', newPackages[0].version);
+				done();
+			});
+		});
+
+		it('does not add package to newPackages if it is in cache', function(done) {
+			var checkNPM = new CheckNPM({cache: cache}),
+				rawPackages = [{
+				'dist-tags': {
+					'latest': '0.0.1'
+				},
+				name: 'foolib',
+				description: 'awesome'
+			}];
+
+			checkNPM.returnNewPackages(rawPackages, function(err, newPackages) {
+				equal('foolib', newPackages[0].name);
+				equal('0.0.1', newPackages[0].version);
+				equal(newPackages.length, 1);
+
+				checkNPM.returnNewPackages(rawPackages, function(err, newPackages) {
+					equal(newPackages.length, 0);
+					done();
+				});
+			});
+		});
+	});
+
 	describe('#mungePackage', function() {
 		it('should return a simplified structure with the keys required for tweeting', function() {
 			var checkNPM = new CheckNPM(),
