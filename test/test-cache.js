@@ -83,6 +83,28 @@ describe('Cache', function () {
   });
 
   describe('#inCache', function() {
+
+    it('should return true if a similar package is in the cache', function(done) {
+      var cache = new Cache({cacheSize: 3});
+      
+      var p1 = {
+        name: 'p1',
+        version: '0.0.1'
+      };
+
+      var p2 = {
+        name: 'p1.lodash',
+        version: '0.0.1'
+      };
+      
+      cache.add(p1, function() {
+        cache.inCache(p2, function(err, inCache) {
+          equal(true, inCache);
+          done();
+        });
+      });
+    });
+
     it('should return true when a package is in the cache', function(done) {
       var cache = new Cache({cacheSize: 3});
       
