@@ -62,10 +62,12 @@ describe('CheckNPM', function() {
 						'latest': '0.0.1'
 					},
 					name: 'foolib',
-					description: 'awesome'
+					description: 'awesome',
+					author: {name: 'ben'}
 				},
 				mungedPackage = checkNPM.mungePackage(rawPackage);
 
+			equal('ben', mungedPackage.author);
 			equal('foolib', mungedPackage.name);
 			equal('awesome', mungedPackage.description);
 			equal('0.0.1', mungedPackage.version);
@@ -83,6 +85,27 @@ describe('CheckNPM', function() {
 			equal('', mungedPackage.description);
 			equal(false, mungedPackage.version);
 			equal('https://npmjs.org/package/foolib', mungedPackage.url);
+		});
+
+		it('should handle missing author key', function() {
+			var checkNPM = new CheckNPM(),
+				rawPackage = {
+					name: 'foolib'
+				},
+				mungedPackage = checkNPM.mungePackage(rawPackage);
+
+			equal('', mungedPackage.author);
+		});
+
+		it('should handle missing author.name', function() {
+			var checkNPM = new CheckNPM(),
+				rawPackage = {
+					name: 'foolib',
+					author: {email: 'bencoe@gmail.com'}
+				},
+				mungedPackage = checkNPM.mungePackage(rawPackage);
+
+			equal('', mungedPackage.author);
 		});
 	});
 
