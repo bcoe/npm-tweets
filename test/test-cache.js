@@ -18,22 +18,26 @@ describe('Cache', function () {
     
     var p1 = {
       name: 'p1',
-      version: '0.0.1'
+      version: '0.0.1',
+      author: ''
     };
 
     var p2 = {
       name: 'p2',
-      version: '0.0.2'
+      version: '0.0.2',
+      author: ''
     };
 
     var p3 = {
       name: 'p3',
-      version: '0.0.3'
+      version: '0.0.3',
+      author: ''
     };
 
     var p4 = {
       name: 'p4',
-      version: '0.0.1'
+      version: '0.0.1',
+      author: ''
     };
 
     async.waterfall([
@@ -67,12 +71,14 @@ describe('Cache', function () {
       
       var p1 = {
         name: 'p1',
-        version: '0.0.1'
+        version: '0.0.1',
+        author: ''
       };
 
       var p2 = {
         name: 'p1.lodash',
-        version: '0.0.1'
+        version: '0.0.1',
+        author: ''
       };
       
       cache.add(p1, function() {
@@ -83,17 +89,42 @@ describe('Cache', function () {
       });
     });
 
+    it('packages should only be flagged as similar if the author is the same', function(done) {
+      var cache = new Cache({cacheSize: 3});
+      
+      var p1 = {
+        name: 'p1',
+        version: '0.0.1',
+        author: 'benjamin'
+      };
+
+      var p2 = {
+        name: 'p1.lodash',
+        version: '0.0.1',
+        author: ''
+      };
+
+      cache.add(p1, function() {
+        cache.inCache(p2, function(err, inCache) {
+          equal(false, inCache);
+          done();
+        });
+      });
+    });
+
     it('should return true when a package is in the cache', function(done) {
       var cache = new Cache({cacheSize: 3});
       
       var p1 = {
         name: 'p1',
-        version: '0.0.1'
+        version: '0.0.1',
+        author: ''
       };
 
       var p2 = {
         name: 'p2',
-        version: '0.0.2'
+        version: '0.0.2',
+        author: ''
       };
       
       cache.add(p1, function() {
@@ -109,12 +140,14 @@ describe('Cache', function () {
       
       var p1 = {
         name: 'p1',
-        version: '0.0.1'
+        version: '0.0.1',
+        author: ''
       };
 
       var p2 = {
         name: 'p2',
-        version: '0.0.2'
+        version: '0.0.2',
+        author: ''
       };
       
       cache.add(p1, function() {
