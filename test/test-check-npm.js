@@ -174,4 +174,91 @@ describe('CheckNPM', function() {
 			equal(checkNPM.majorRelease(rawPackage2), true);
 		});
 	});
+
+  describe('#filterPackage', function() {
+    var rawData = [{
+      'dist-tags': {
+        'latest': '0.0.1'
+      },
+      versions:{
+        '0.0.1':{
+          keywords:['A','B','C']
+        }
+      },
+      name: 'foolib1',
+      description: 'awesome'
+    },
+      {
+        'dist-tags': {
+          'latest': '0.0.1'
+        },
+        versions:{
+          '0.0.1':{
+            keywords:['C']
+          }
+        },
+        name: 'foolib2',
+        description: 'awesome'
+      },
+      {
+        'dist-tags': {
+          'latest': '0.0.1'
+        },
+        versions:{
+          '0.0.1':{
+            keywords:['B']
+          }
+        },
+        name: 'foolib3',
+        description: 'awesome'
+      }];
+
+    it('should to nothing if no filter defined', function(done) {
+      var checkNPM = new CheckNPM({cache: cache}),
+          rawPackages = rawData;
+
+      checkNPM.returnNewPackages(rawPackages, function(err, newPackages) {
+        equal(newPackages.length, 3);
+        done();
+      });
+    });
+
+    it('should filter all if filter returns always false', function(done) {
+      var checkNPM = new CheckNPM({cache: cache, filter: function(){
+            return false;
+          }}),
+          rawPackages =rawData;
+
+      checkNPM.returnNewPackages(rawPackages, function(err, newPackages) {
+        equal(newPackages.length, 0);
+        done();
+      });
+    });
+
+    it('should filter none if filter returns always true', function(done) {
+      var checkNPM = new CheckNPM({cache: cache, filter: function(){
+            return true;
+          }}),
+          rawPackages =rawData;
+
+      checkNPM.returnNewPackages(rawPackages, function(err, newPackages) {
+        equal(newPackages.length, 3);
+        done();
+      });
+    });
+
+    it('should use filter-function to filter the rawdata', function(done) {
+      var checkNPM = new CheckNPM({cache: cache, filter: function(package){
+            var latestVersion = package['dist-tags'].latest;
+            return package.versions[latestVersion].keywords.length > 2;
+          }}),
+          rawPackages =rawData;
+
+      checkNPM.returnNewPackages(rawPackages, function(err, newPackages) {
+        equal(newPackages.length, 1);
+        done();
+      });
+    });
+  });
+
 });
