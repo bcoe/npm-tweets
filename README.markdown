@@ -25,7 +25,8 @@ npmTweets = new NPMTweets({
 	consumer_key: 'CONSUMER_KEY',
 	consumer_secret: 'CONSUMER_SECRET',
 	access_token_key: 'TOKEN_KEY',
-	access_token_secret: 'TOKEN_SECRET'
+	access_token_secret: 'TOKEN_SECRET',
+	filter: function(package){ return package.name === 'npm-tweets'; }
 });
 ```
 
