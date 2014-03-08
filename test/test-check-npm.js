@@ -213,7 +213,7 @@ describe('CheckNPM', function() {
         description: 'awesome'
       }];
 
-    it('should to nothing if no filter defined', function(done) {
+    it('should do nothing if no filter defined', function(done) {
       var checkNPM = new CheckNPM({cache: cache}),
           rawPackages = rawData;
 
