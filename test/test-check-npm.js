@@ -71,7 +71,7 @@ describe('CheckNPM', function() {
 			equal('foolib', mungedPackage.name);
 			equal('awesome', mungedPackage.description);
 			equal('0.0.1', mungedPackage.version);
-			equal('https://npmjs.org/package/foolib', mungedPackage.url);
+			equal('https://npmjs.com/package/foolib', mungedPackage.url);
 		});
 
 		it('should handle missing version and description keys', function() {
@@ -84,7 +84,7 @@ describe('CheckNPM', function() {
 			equal('foolib', mungedPackage.name);
 			equal('', mungedPackage.description);
 			equal(false, mungedPackage.version);
-			equal('https://npmjs.org/package/foolib', mungedPackage.url);
+			equal('https://npmjs.com/package/foolib', mungedPackage.url);
 		});
 
 		it('should handle missing author key', function() {
