@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+require('dotenv').load();
+console.log(process.env)
 
 var NPMTweets = require('../lib').NPMTweets,
   optimist = require('optimist');
