@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var NPMTweets = require('../lib').NPMTweets,
   optimist = require('optimist');
 
